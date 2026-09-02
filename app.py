@@ -7,6 +7,15 @@ app = Flask(__name__)
 
 TARGET_URL = "https://gccpricing.com"
 
+# 🟢 FIXED: This root route ensures your server NEVER returns a 404 to the network gateway
+@app.route('/', methods=['GET'])
+def home_ping():
+    return jsonify({
+        "status": "online",
+        "message": "Global Luxury Spice Index API is fully operational",
+        "endpoints": ["/api/v1/luxury-spices"]
+    }), 200
+
 @app.route('/api/v1/luxury-spices', methods=['GET'])
 def fetch_spice_metrics():
     try:
